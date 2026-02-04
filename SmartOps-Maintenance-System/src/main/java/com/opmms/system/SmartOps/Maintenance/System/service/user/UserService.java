@@ -1,7 +1,7 @@
-package com.opmms.system.SmartOps.Maintenance.System.service;
+package com.opmms.system.SmartOps.Maintenance.System.service.user;
 
-import com.opmms.system.SmartOps.Maintenance.System.payload.ApiRequestUser;
-import com.opmms.system.SmartOps.Maintenance.System.payload.ApiResponseUser;
+import com.opmms.system.SmartOps.Maintenance.System.payload.user.ApiRequestUser;
+import com.opmms.system.SmartOps.Maintenance.System.payload.user.ApiResponseUser;
 
 public interface UserService {
     ApiResponseUser getAllUser();

@@ -1,4 +1,4 @@
-package com.opmms.system.SmartOps.Maintenance.System.payload;
+package com.opmms.system.SmartOps.Maintenance.System.payload.user;
 
 import com.opmms.system.SmartOps.Maintenance.System.model.AppRole;
 import lombok.AllArgsConstructor;

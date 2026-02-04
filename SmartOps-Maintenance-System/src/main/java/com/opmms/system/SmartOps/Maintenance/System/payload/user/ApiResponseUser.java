@@ -1,4 +1,4 @@
-package com.opmms.system.SmartOps.Maintenance.System.payload;
+package com.opmms.system.SmartOps.Maintenance.System.payload.user;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;

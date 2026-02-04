@@ -1,12 +1,12 @@
 package com.opmms.system.SmartOps.Maintenance.System.exception;
 
-import com.opmms.system.SmartOps.Maintenance.System.model.ResourceType;
-import com.opmms.system.SmartOps.Maintenance.System.payload.ApiResponseUser;
-import com.opmms.system.SmartOps.Maintenance.System.payload.UserData;
+import com.opmms.system.SmartOps.Maintenance.System.payload.machine.ApiResponseMachine;
+import com.opmms.system.SmartOps.Maintenance.System.payload.machine.MachineData;
+import com.opmms.system.SmartOps.Maintenance.System.payload.user.ApiResponseUser;
+import com.opmms.system.SmartOps.Maintenance.System.payload.user.UserData;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
-import com.opmms.system.SmartOps.Maintenance.System.model.ResourceType.*;
 
 import java.util.Collections;
 
@@ -21,6 +21,9 @@ public class GlobalExceptionHandler {
 
            case  USER->
                    buildResponse(new ApiResponseUser(exception.getStatus(),new UserData(Collections.emptyList()), exception.getMessage()));
+
+           case MACHINE ->
+                 buildResponse(new ApiResponseMachine(exception.getStatus(),new MachineData(Collections.emptyList()), exception.getMessage()));
        };
     }
 

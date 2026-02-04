@@ -1,11 +1,11 @@
-package com.opmms.system.SmartOps.Maintenance.System.service;
+package com.opmms.system.SmartOps.Maintenance.System.service.user;
 
 import com.opmms.system.SmartOps.Maintenance.System.exception.ResourceNotFoundException;
 import com.opmms.system.SmartOps.Maintenance.System.model.ResourceType;
 import com.opmms.system.SmartOps.Maintenance.System.model.User;
-import com.opmms.system.SmartOps.Maintenance.System.payload.ApiRequestUser;
-import com.opmms.system.SmartOps.Maintenance.System.payload.ApiResponseUser;
-import com.opmms.system.SmartOps.Maintenance.System.payload.UserData;
+import com.opmms.system.SmartOps.Maintenance.System.payload.user.ApiRequestUser;
+import com.opmms.system.SmartOps.Maintenance.System.payload.user.ApiResponseUser;
+import com.opmms.system.SmartOps.Maintenance.System.payload.user.UserData;
 import com.opmms.system.SmartOps.Maintenance.System.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -15,7 +15,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class UserServiceImpl implements  UserService {
+public class UserServiceImpl implements UserService {
 
     private  final UserRepository userRepository;
     private final ModelMapper modelMapper;

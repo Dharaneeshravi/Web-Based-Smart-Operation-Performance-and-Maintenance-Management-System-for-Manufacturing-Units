@@ -1,8 +1,8 @@
 package com.opmms.system.SmartOps.Maintenance.System.controller;
 
-import com.opmms.system.SmartOps.Maintenance.System.payload.ApiRequestUser;
-import com.opmms.system.SmartOps.Maintenance.System.payload.ApiResponseUser;
-import com.opmms.system.SmartOps.Maintenance.System.service.UserService;
+import com.opmms.system.SmartOps.Maintenance.System.payload.user.ApiRequestUser;
+import com.opmms.system.SmartOps.Maintenance.System.payload.user.ApiResponseUser;
+import com.opmms.system.SmartOps.Maintenance.System.service.user.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
