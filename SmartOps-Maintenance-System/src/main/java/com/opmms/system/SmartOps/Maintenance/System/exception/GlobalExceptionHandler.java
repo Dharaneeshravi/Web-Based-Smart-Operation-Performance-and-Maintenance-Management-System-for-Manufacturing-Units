@@ -2,6 +2,8 @@ package com.opmms.system.SmartOps.Maintenance.System.exception;
 
 import com.opmms.system.SmartOps.Maintenance.System.payload.machine.ApiResponseMachine;
 import com.opmms.system.SmartOps.Maintenance.System.payload.machine.MachineData;
+import com.opmms.system.SmartOps.Maintenance.System.payload.production.ApiResponseProduction;
+import com.opmms.system.SmartOps.Maintenance.System.payload.production.ProductionData;
 import com.opmms.system.SmartOps.Maintenance.System.payload.user.ApiResponseUser;
 import com.opmms.system.SmartOps.Maintenance.System.payload.user.UserData;
 import org.springframework.http.ResponseEntity;
@@ -24,6 +26,9 @@ public class GlobalExceptionHandler {
 
            case MACHINE ->
                  buildResponse(new ApiResponseMachine(exception.getStatus(),new MachineData(Collections.emptyList()), exception.getMessage()));
+
+           case PRODUCTION ->
+               buildResponse(new ApiResponseProduction(exception.getStatus(),new ProductionData(Collections.emptyList()), exception.getMessage()));
        };
     }
 
