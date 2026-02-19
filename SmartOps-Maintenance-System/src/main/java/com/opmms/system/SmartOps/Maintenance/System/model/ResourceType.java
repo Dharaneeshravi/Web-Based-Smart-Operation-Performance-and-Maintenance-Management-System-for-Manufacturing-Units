@@ -4,5 +4,6 @@ public enum ResourceType {
 
     USER,
     MACHINE,
-    PRODUCTION
+    PRODUCTION,
+    DOWNTIME,
 }

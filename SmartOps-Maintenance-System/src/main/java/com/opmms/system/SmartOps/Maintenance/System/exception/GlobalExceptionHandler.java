@@ -1,5 +1,7 @@
 package com.opmms.system.SmartOps.Maintenance.System.exception;
 
+import com.opmms.system.SmartOps.Maintenance.System.payload.downtime.ApiResponseDowntime;
+import com.opmms.system.SmartOps.Maintenance.System.payload.downtime.DowntimeData;
 import com.opmms.system.SmartOps.Maintenance.System.payload.machine.ApiResponseMachine;
 import com.opmms.system.SmartOps.Maintenance.System.payload.machine.MachineData;
 import com.opmms.system.SmartOps.Maintenance.System.payload.production.ApiResponseProduction;
@@ -29,6 +31,9 @@ public class GlobalExceptionHandler {
 
            case PRODUCTION ->
                buildResponse(new ApiResponseProduction(exception.getStatus(),new ProductionData(Collections.emptyList()), exception.getMessage()));
+
+           case DOWNTIME ->
+                buildResponse(new ApiResponseDowntime(exception.getStatus(),new DowntimeData(Collections.emptyList()), exception.getMessage()));
        };
     }
 
