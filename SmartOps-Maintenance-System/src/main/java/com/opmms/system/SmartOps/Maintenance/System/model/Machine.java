@@ -20,20 +20,18 @@ public class Machine {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long machineId;
     private String machineName;
-    private String machineCode;
     private String location;
-    private String manufacturer;
     private String model;
     private Date installationDate;
-    private Integer ratedCapacity;
+    private String machineType;
+    private String capacity;
     private Status status;
     private String remarks;
-
+    private String machineCode;
+    private String manufacturerName;
     @CreationTimestamp
     @Column(updatable = false)
     private Date createdAt;
-
     @UpdateTimestamp
     private Date updatedAt;
-
 }

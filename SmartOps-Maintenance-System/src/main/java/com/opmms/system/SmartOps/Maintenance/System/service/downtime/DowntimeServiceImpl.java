@@ -51,12 +51,12 @@ public class DowntimeServiceImpl implements DowntimeService {
         downtime.setDate(apiRequestDowntime.getDate());
         downtime.setRemarks(apiRequestDowntime.getRemarks());
         downtime.setReason(apiRequestDowntime.getReason());
-        downtime.setStart_time(apiRequestDowntime.getStart_time());
-        downtime.setEnd_time(apiRequestDowntime.getEnd_time());
+        downtime.setStartTime(apiRequestDowntime.getStartTime());
+        downtime.setEndTime(apiRequestDowntime.getEndTime());
         downtime.setStatus(apiRequestDowntime.getStatus());
         downtime.setDuration(apiRequestDowntime.getDuration());
         Downtime updatedDowntime = downtimeRepository.save(downtime);
-        return buildResponse(200,Collections.singletonList(downtime),"downtime updated successfully");
+        return buildResponse(200,Collections.singletonList(updatedDowntime),"downtime updated successfully");
     }
 
     @Override

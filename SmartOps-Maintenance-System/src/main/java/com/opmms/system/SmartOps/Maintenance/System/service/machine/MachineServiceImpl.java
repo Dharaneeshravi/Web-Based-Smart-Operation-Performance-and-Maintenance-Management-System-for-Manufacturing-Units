@@ -46,14 +46,15 @@ public class MachineServiceImpl implements MachineService {
 
         Machine machine=findByIdOrThrow(machineId);
         machine.setMachineName(apiRequestMachine.getMachineName());
-        machine.setMachineCode(apiRequestMachine.getMachineCode());
         machine.setLocation(apiRequestMachine.getLocation());
-        machine.setManufacturer(apiRequestMachine.getManufacturer());
         machine.setModel(apiRequestMachine.getModel());
         machine.setRemarks(apiRequestMachine.getRemarks());
         machine.setInstallationDate(apiRequestMachine.getInstallationDate());
+        machine.setCapacity(apiRequestMachine.getCapacity());
         machine.setStatus(apiRequestMachine.getStatus());
-        machine.setRatedCapacity(apiRequestMachine.getRatedCapacity());
+        machine.setMachineType(apiRequestMachine.getMachineType());
+        machine.setManufacturerName(apiRequestMachine.getManufacturerName());
+        machine.setMachineCode(apiRequestMachine.getMachineCode());
         Machine updatedMachine=machineRepository.save(machine);
         return buildResponse(200,Collections.singletonList(updatedMachine),"machine updated successfully");
     }

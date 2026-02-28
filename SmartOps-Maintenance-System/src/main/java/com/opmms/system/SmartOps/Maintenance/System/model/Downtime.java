@@ -1,13 +1,13 @@
 package com.opmms.system.SmartOps.Maintenance.System.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
 import java.time.LocalTime;
 import java.util.Date;
 
@@ -22,10 +22,15 @@ public class Downtime {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long downtimeId;
     private Date date;
-    private LocalTime start_time;
-    private LocalTime end_time;
+    private LocalTime startTime;
+    private LocalTime endTime;
     private float duration;
     private String reason;
     private Status status;
     private String remarks;
+    @CreationTimestamp
+    @Column(updatable = false)
+    private Date createdAt;
+    @UpdateTimestamp
+    private Date updatedAt;
 }

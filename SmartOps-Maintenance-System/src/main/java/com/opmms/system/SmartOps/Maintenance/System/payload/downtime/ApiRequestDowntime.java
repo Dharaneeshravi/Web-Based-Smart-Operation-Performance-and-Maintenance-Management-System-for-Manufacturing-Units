@@ -14,8 +14,8 @@ public class ApiRequestDowntime {
 
 
     private Date date;
-    private LocalTime start_time;
-    private LocalTime end_time;
+    private LocalTime startTime;
+    private LocalTime endTime;
     private float duration;
     private String reason;
     private Status status;

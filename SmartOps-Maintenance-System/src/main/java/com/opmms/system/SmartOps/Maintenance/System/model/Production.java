@@ -6,7 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
-
+import org.hibernate.annotations.UpdateTimestamp;
 import java.time.LocalTime;
 import java.util.Date;
 
@@ -30,4 +30,6 @@ public class Production {
     @CreationTimestamp
     @Column(updatable = false)
     private Date createdAt;
+    @UpdateTimestamp
+    private Date updatedAt;
 }
