@@ -6,4 +6,5 @@ public enum ResourceType {
     MACHINE,
     PRODUCTION,
     DOWNTIME,
+    MAINTENANCE
 }
