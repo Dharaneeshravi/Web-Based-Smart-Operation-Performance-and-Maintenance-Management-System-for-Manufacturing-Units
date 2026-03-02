@@ -1,13 +1,14 @@
 package com.opmms.system.SmartOps.Maintenance.System.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
+import java.time.LocalDate;
 import java.util.Date;
 
 @Entity
@@ -21,9 +22,14 @@ public class Maintenance {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long maintenanceId;
     private MaintenanceType  maintenanceType;
-    private Date scheduledDate;
-    private Date performedDate;
+    private LocalDate scheduledDate;
+    private LocalDate performedDate;
     private String description;
     private Status status;
     private Double cost;
+    @CreationTimestamp
+    @Column(updatable = false)
+    private LocalDate createdAt;
+    @UpdateTimestamp
+    private LocalDate updatedAt;
 }

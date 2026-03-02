@@ -16,21 +16,19 @@ import java.util.Date;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Machine {
+public class Performance {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long machineId;
-    private String machineName;
-    private String location;
-    private String model;
-    private Date installationDate;
-    private String machineType;
-    private String capacity;
-    private Status status;
-    private String remarks;
-    private String machineCode;
-    private String manufacturerName;
+    private Long performanceId;
+    private LocalDate date;
+    private Double workingHours;
+    private Double downtimeHours;
+    private Integer productionQty;
+    private Double availability;
+    private Double performance;
+    private Double quality;
+    private Double oee;
     @CreationTimestamp
     @Column(updatable = false)
     private LocalDate createdAt;

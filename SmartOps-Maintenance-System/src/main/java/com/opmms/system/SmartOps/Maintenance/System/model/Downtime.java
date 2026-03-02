@@ -8,6 +8,7 @@ import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
+import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Date;
 
@@ -21,7 +22,7 @@ public class Downtime {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long downtimeId;
-    private Date date;
+    private LocalDate date;
     private LocalTime startTime;
     private LocalTime endTime;
     private float duration;
@@ -30,7 +31,7 @@ public class Downtime {
     private String remarks;
     @CreationTimestamp
     @Column(updatable = false)
-    private Date createdAt;
+    private LocalDate createdAt;
     @UpdateTimestamp
-    private Date updatedAt;
+    private LocalDate updatedAt;
 }

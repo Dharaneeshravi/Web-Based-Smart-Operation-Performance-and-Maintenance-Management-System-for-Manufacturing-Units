@@ -8,6 +8,7 @@ import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.Set;
 
@@ -29,8 +30,8 @@ public class User {
     private String contactNumber;
     @CreationTimestamp
     @Column(updatable = false)
-    private Date createdAt;
+    private LocalDate createdAt;
     @UpdateTimestamp
-    private Date updatedAt;
+    private LocalDate updatedAt;
 
 }

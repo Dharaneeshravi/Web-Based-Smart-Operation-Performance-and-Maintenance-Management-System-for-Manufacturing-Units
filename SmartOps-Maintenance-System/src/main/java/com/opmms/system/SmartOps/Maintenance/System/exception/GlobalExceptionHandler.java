@@ -6,8 +6,12 @@ import com.opmms.system.SmartOps.Maintenance.System.payload.machine.ApiResponseM
 import com.opmms.system.SmartOps.Maintenance.System.payload.machine.MachineData;
 import com.opmms.system.SmartOps.Maintenance.System.payload.maintenance.ApiResponseMaintenance;
 import com.opmms.system.SmartOps.Maintenance.System.payload.maintenance.MaintenanceData;
+import com.opmms.system.SmartOps.Maintenance.System.payload.performance.ApiResponsePerformance;
+import com.opmms.system.SmartOps.Maintenance.System.payload.performance.PerformanceData;
 import com.opmms.system.SmartOps.Maintenance.System.payload.production.ApiResponseProduction;
 import com.opmms.system.SmartOps.Maintenance.System.payload.production.ProductionData;
+import com.opmms.system.SmartOps.Maintenance.System.payload.shift.ApiResponseShift;
+import com.opmms.system.SmartOps.Maintenance.System.payload.shift.ShiftData;
 import com.opmms.system.SmartOps.Maintenance.System.payload.user.ApiResponseUser;
 import com.opmms.system.SmartOps.Maintenance.System.payload.user.UserData;
 import org.springframework.http.ResponseEntity;
@@ -39,6 +43,12 @@ public class GlobalExceptionHandler {
 
            case MAINTENANCE ->
                buildResponse(new ApiResponseMaintenance(exception.getStatus(),new MaintenanceData(Collections.emptyList()), exception.getMessage()));
+
+           case PERFORMANCE ->
+               buildResponse(new ApiResponsePerformance(exception.getStatus(),new PerformanceData(Collections.emptyList()), exception.getMessage()));
+
+           case SHIFT ->
+               buildResponse(new ApiResponseShift(exception.getStatus(),new ShiftData(Collections.emptyList()), exception.getMessage()));
        };
     }
 

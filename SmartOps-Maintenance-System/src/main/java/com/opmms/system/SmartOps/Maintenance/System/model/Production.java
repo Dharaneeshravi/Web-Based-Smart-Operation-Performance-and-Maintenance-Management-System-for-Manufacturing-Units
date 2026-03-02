@@ -7,6 +7,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+
+import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Date;
 
@@ -20,7 +22,7 @@ public class Production {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long productionId;
-    private Date productionDate;
+    private LocalDate productionDate;
     private LocalTime startTime;
     private LocalTime endTime;
     private Double totalHours;
@@ -29,7 +31,7 @@ public class Production {
     private String remarks;
     @CreationTimestamp
     @Column(updatable = false)
-    private Date createdAt;
+    private LocalDate createdAt;
     @UpdateTimestamp
-    private Date updatedAt;
+    private LocalDate updatedAt;
 }

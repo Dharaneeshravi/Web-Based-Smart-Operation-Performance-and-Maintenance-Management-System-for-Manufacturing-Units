@@ -9,28 +9,20 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDate;
-import java.util.Date;
+import java.time.LocalTime;
 
 @Entity
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Machine {
-
+public class Shift {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long machineId;
-    private String machineName;
-    private String location;
-    private String model;
-    private Date installationDate;
-    private String machineType;
-    private String capacity;
-    private Status status;
-    private String remarks;
-    private String machineCode;
-    private String manufacturerName;
+    private Long ShiftId;
+    private ShiftName shiftName;
+    private LocalTime startTime;
+    private LocalTime endTime;
     @CreationTimestamp
     @Column(updatable = false)
     private LocalDate createdAt;
