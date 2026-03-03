@@ -23,9 +23,9 @@ public class DowntimeController {
     }
 
     @PostMapping("/createDowntime")
-    public ResponseEntity<ApiResponseDowntime> createDowntime(@RequestBody ApiRequestDowntime apiRequestDowntime)
+    public ResponseEntity<ApiResponseDowntime> createDowntime(@RequestParam Long machineId,@RequestParam Long userId,@RequestBody ApiRequestDowntime apiRequestDowntime)
     {
-        return ResponseEntity.status(HttpStatus.CREATED).body(downtimeService.createDowntime(apiRequestDowntime));
+        return ResponseEntity.status(HttpStatus.CREATED).body(downtimeService.createDowntime(machineId,userId,apiRequestDowntime));
     }
 
     @GetMapping("/getDowntimeById/{downtimeId}")

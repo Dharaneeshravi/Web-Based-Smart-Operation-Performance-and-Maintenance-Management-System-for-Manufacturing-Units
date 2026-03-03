@@ -20,6 +20,8 @@ public class InformationDowntime {
     private String reason;
     private Status status;
     private String remarks;
+    private Long machineId;
+    private Long userId;
     private LocalDate createdAt;
     private LocalDate updatedAt;
 }

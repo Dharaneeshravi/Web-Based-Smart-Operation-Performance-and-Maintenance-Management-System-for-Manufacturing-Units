@@ -2,12 +2,16 @@ package com.opmms.system.SmartOps.Maintenance.System.service.downtime;
 
 import com.opmms.system.SmartOps.Maintenance.System.exception.ResourceNotFoundException;
 import com.opmms.system.SmartOps.Maintenance.System.model.Downtime;
+import com.opmms.system.SmartOps.Maintenance.System.model.Machine;
 import com.opmms.system.SmartOps.Maintenance.System.model.ResourceType;
+import com.opmms.system.SmartOps.Maintenance.System.model.User;
 import com.opmms.system.SmartOps.Maintenance.System.payload.downtime.ApiRequestDowntime;
 import com.opmms.system.SmartOps.Maintenance.System.payload.downtime.ApiResponseDowntime;
 import com.opmms.system.SmartOps.Maintenance.System.payload.downtime.DowntimeData;
 import com.opmms.system.SmartOps.Maintenance.System.payload.downtime.InformationDowntime;
 import com.opmms.system.SmartOps.Maintenance.System.repository.DowntimeRepository;
+import com.opmms.system.SmartOps.Maintenance.System.repository.MachineRepository;
+import com.opmms.system.SmartOps.Maintenance.System.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
@@ -20,6 +24,8 @@ import java.util.List;
 public class DowntimeServiceImpl implements DowntimeService {
 
     private final DowntimeRepository downtimeRepository;
+    private final MachineRepository machineRepository;
+    private final UserRepository userRepository;
     private final ModelMapper mapper;
 
     @Override
@@ -31,9 +37,19 @@ public class DowntimeServiceImpl implements DowntimeService {
     }
 
     @Override
-    public ApiResponseDowntime createDowntime(ApiRequestDowntime apiRequestDowntime) {
+    public ApiResponseDowntime createDowntime(Long machineId,Long userId,ApiRequestDowntime apiRequestDowntime) {
+
+        Machine machine=machineRepository.findById(machineId)
+                .orElseThrow(()->new ResourceNotFoundException(404, ResourceType.MACHINE,"machine not found"));
+
+        User user=userRepository.findById(userId)
+                .orElseThrow(()->new ResourceNotFoundException(404, ResourceType.USER,"User not found "));
 
         Downtime downtime = mapper.map(apiRequestDowntime, Downtime.class);
+        downtime.setUser(user);
+        downtime.setUserId(userId);
+        downtime.setMachineId(machineId);
+        downtime.setMachine(machine);
         Downtime savedDowntime = downtimeRepository.save(downtime);
         return buildResponse(201,Collections.singletonList(mapToInfo(savedDowntime)),"downtime created successfully");
     }

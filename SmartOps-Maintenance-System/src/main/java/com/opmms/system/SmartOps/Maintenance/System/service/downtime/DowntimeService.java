@@ -7,7 +7,7 @@ import org.springframework.http.HttpStatus;
 public interface DowntimeService {
     ApiResponseDowntime getAllDowntime();
 
-    ApiResponseDowntime createDowntime(ApiRequestDowntime apiRequestDowntime);
+    ApiResponseDowntime createDowntime(Long machineId,Long userId,ApiRequestDowntime apiRequestDowntime);
 
     ApiResponseDowntime getDowntimeById(Long downtimeId);
 
