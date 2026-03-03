@@ -6,7 +6,7 @@ import com.opmms.system.SmartOps.Maintenance.System.payload.production.ApiRespon
 public interface ProductionService {
     ApiResponseProduction getAllProduction();
 
-    ApiResponseProduction createProduction(Long machineId,ApiRequestProduction apiRequestProduction);
+    ApiResponseProduction createProduction(Long machineId,Long userId,Long shiftId,ApiRequestProduction apiRequestProduction);
 
     ApiResponseProduction getProductionById(Long productionId);
 

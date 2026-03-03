@@ -35,9 +35,25 @@ public class Production {
     private LocalDate updatedAt;
     @Column(name = "machine_number")
     private Long machineId;
+    @Column(name = "user_number")
+    private Long userId;
+    @Column(name = "shift_number")
+    private Long shiftId;
 
     @ManyToOne
     @JsonBackReference
     @JoinColumn(name = "machineId")
     private Machine machine;
+
+    @ManyToOne
+    @JsonBackReference
+    @JoinColumn(name = "user_id")
+    private User user;
+
+    @ManyToOne
+    @JsonBackReference
+    @JoinColumn(name = "shift_id")
+    private Shift shift;
+
+
 }

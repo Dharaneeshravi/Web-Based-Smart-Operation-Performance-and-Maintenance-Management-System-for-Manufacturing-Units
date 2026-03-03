@@ -22,4 +22,6 @@ public class InformationProduction {
     private LocalDate createdAt;
     private LocalDate updatedAt;
     private Long machineId;
+    private Long userId;
+    private Long shiftId;
 }

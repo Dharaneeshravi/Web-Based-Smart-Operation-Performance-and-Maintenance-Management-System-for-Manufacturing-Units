@@ -1,15 +1,15 @@
 package com.opmms.system.SmartOps.Maintenance.System.service.production;
 
 import com.opmms.system.SmartOps.Maintenance.System.exception.ResourceNotFoundException;
-import com.opmms.system.SmartOps.Maintenance.System.model.Machine;
-import com.opmms.system.SmartOps.Maintenance.System.model.Production;
-import com.opmms.system.SmartOps.Maintenance.System.model.ResourceType;
+import com.opmms.system.SmartOps.Maintenance.System.model.*;
 import com.opmms.system.SmartOps.Maintenance.System.payload.production.ApiRequestProduction;
 import com.opmms.system.SmartOps.Maintenance.System.payload.production.ApiResponseProduction;
 import com.opmms.system.SmartOps.Maintenance.System.payload.production.InformationProduction;
 import com.opmms.system.SmartOps.Maintenance.System.payload.production.ProductionData;
 import com.opmms.system.SmartOps.Maintenance.System.repository.MachineRepository;
 import com.opmms.system.SmartOps.Maintenance.System.repository.ProductionRepository;
+import com.opmms.system.SmartOps.Maintenance.System.repository.ShiftRepository;
+import com.opmms.system.SmartOps.Maintenance.System.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
@@ -22,6 +22,8 @@ public class ProductionServiceImpl implements  ProductionService {
 
     private final ProductionRepository productionRepository;
     private final MachineRepository machineRepository;
+    private final UserRepository userRepository;
+    private final ShiftRepository shiftRepository;
     private final ModelMapper mapper;
 
     @Override
@@ -33,13 +35,24 @@ public class ProductionServiceImpl implements  ProductionService {
     }
 
     @Override
-    public ApiResponseProduction createProduction(Long machineId,ApiRequestProduction apiRequestProduction) {
+    public ApiResponseProduction createProduction(Long machineId,Long userId,Long shiftId,ApiRequestProduction apiRequestProduction) {
 
         Machine machine=machineRepository.findById(machineId)
                 .orElseThrow(()->new ResourceNotFoundException(404, ResourceType.MACHINE,"machine not found"));
 
+        User user=userRepository.findById(userId)
+                .orElseThrow(()->new ResourceNotFoundException(404, ResourceType.USER,"User not found "));
+
+        Shift shift=shiftRepository.findById(shiftId)
+                .orElseThrow(()->new ResourceNotFoundException(404, ResourceType.SHIFT,"shift not found"));
+
+
         Production production=mapToProduction(apiRequestProduction);
+        production.setShift(shift);
+        production.setShiftId(shiftId);
         production.setMachine(machine);
+        production.setUser(user);
+        production.setUserId(userId);
         production.setMachineId(machineId);
         Production savedProduction=productionRepository.save(production);
         return buildResponse(201,Collections.singletonList(mapToInfo(savedProduction)),"production created successfully");

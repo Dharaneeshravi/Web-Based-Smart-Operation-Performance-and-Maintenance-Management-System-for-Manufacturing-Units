@@ -1,5 +1,6 @@
 package com.opmms.system.SmartOps.Maintenance.System.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -33,5 +34,9 @@ public class User {
     private LocalDate createdAt;
     @UpdateTimestamp
     private LocalDate updatedAt;
+
+    @OneToMany(mappedBy = "user")
+    @JsonManagedReference
+    private Set<Production>  production;
 
 }

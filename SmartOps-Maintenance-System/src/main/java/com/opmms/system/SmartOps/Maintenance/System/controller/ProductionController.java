@@ -22,9 +22,9 @@ public class ProductionController {
     }
 
     @PostMapping("/createProduction")
-    public ResponseEntity<ApiResponseProduction> createProduction(@RequestParam Long machineId,@RequestBody ApiRequestProduction apiRequestProduction)
+    public ResponseEntity<ApiResponseProduction> createProduction(@RequestParam Long machineId,@RequestParam Long userId,@RequestParam Long shiftId,@RequestBody ApiRequestProduction apiRequestProduction)
     {
-        return ResponseEntity.status(HttpStatus.CREATED).body(productionService.createProduction(machineId,apiRequestProduction));
+        return ResponseEntity.status(HttpStatus.CREATED).body(productionService.createProduction(machineId,userId,shiftId,apiRequestProduction));
     }
 
     @GetMapping("/getProductionById/{productionId}")
