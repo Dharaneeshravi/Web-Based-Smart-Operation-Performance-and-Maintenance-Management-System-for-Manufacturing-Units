@@ -11,5 +11,5 @@ import java.util.List;
 @NoArgsConstructor
 public class ProductionData {
 
-    private List<Production> productionList;
+    private List<InformationProduction> informationProductions;
 }

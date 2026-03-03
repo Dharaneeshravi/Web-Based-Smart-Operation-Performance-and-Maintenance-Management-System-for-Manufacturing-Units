@@ -5,6 +5,7 @@ import com.opmms.system.SmartOps.Maintenance.System.model.ResourceType;
 import com.opmms.system.SmartOps.Maintenance.System.model.User;
 import com.opmms.system.SmartOps.Maintenance.System.payload.user.ApiRequestUser;
 import com.opmms.system.SmartOps.Maintenance.System.payload.user.ApiResponseUser;
+import com.opmms.system.SmartOps.Maintenance.System.payload.user.InformationUser;
 import com.opmms.system.SmartOps.Maintenance.System.payload.user.UserData;
 import com.opmms.system.SmartOps.Maintenance.System.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -23,22 +24,23 @@ public class UserServiceImpl implements UserService {
     @Override
     public ApiResponseUser getAllUser() {
 
-        List<User> users = userRepository.findAll();
-       return buildResponse(200, users, "Successfully Retrieved Users");
+        List<InformationUser> informationUsers = userRepository.findAll()
+                .stream().map(this::mapToInfo).toList();
+       return buildResponse(200, informationUsers, "Successfully Retrieved Users");
     }
 
     @Override
     public ApiResponseUser createUser(ApiRequestUser apiRequestUser) {
 
         User createdUser = userRepository.save(mapToUser(apiRequestUser));
-        return buildResponse(201, Collections.singletonList(createdUser), "User Created Successfully");
+        return buildResponse(201, Collections.singletonList(mapToInfo(createdUser)), "User Created Successfully");
     }
 
     @Override
     public ApiResponseUser getUserById(Long userId) {
 
         User user=findByIdOrThrow(userId);
-        return buildResponse(200, Collections.singletonList(user), "User Retrieved Successfully");
+        return buildResponse(200, Collections.singletonList(mapToInfo(user)), "User Retrieved Successfully");
     }
 
     @Override
@@ -51,7 +53,7 @@ public class UserServiceImpl implements UserService {
         user.setEmail(apiRequestUser.getEmail());
         user.setRole(apiRequestUser.getRole());
         User updatedUser=userRepository.save(user);
-        return buildResponse(200, Collections.singletonList(updatedUser), "User Updated Successfully");
+        return buildResponse(200, Collections.singletonList(mapToInfo(updatedUser)), "User Updated Successfully");
     }
 
     @Override
@@ -59,12 +61,17 @@ public class UserServiceImpl implements UserService {
 
         User user=findByIdOrThrow(userId);
         userRepository.delete(user);
-        return buildResponse(200,Collections.singletonList(user), "User Deleted Successfully");
+        return buildResponse(200,Collections.singletonList(mapToInfo(user)), "User Deleted Successfully");
     }
 
-    private ApiResponseUser buildResponse(int status, List<User> userList, String message)
+    private ApiResponseUser buildResponse(int status, List<InformationUser> data, String message)
     {
-        return new ApiResponseUser(status,new UserData(userList==null?Collections.emptyList():userList), message);
+        return new ApiResponseUser(status,new UserData(data==null?Collections.emptyList():data), message);
+    }
+
+    private InformationUser mapToInfo(User user)
+    {
+        return modelMapper.map(user, InformationUser.class);
     }
 
     private User findByIdOrThrow(Long userId)

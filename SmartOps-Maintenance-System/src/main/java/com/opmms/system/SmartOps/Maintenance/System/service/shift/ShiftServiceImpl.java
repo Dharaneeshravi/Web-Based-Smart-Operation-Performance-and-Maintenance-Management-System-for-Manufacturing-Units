@@ -5,6 +5,7 @@ import com.opmms.system.SmartOps.Maintenance.System.model.ResourceType;
 import com.opmms.system.SmartOps.Maintenance.System.model.Shift;
 import com.opmms.system.SmartOps.Maintenance.System.payload.shift.ApiRequestShift;
 import com.opmms.system.SmartOps.Maintenance.System.payload.shift.ApiResponseShift;
+import com.opmms.system.SmartOps.Maintenance.System.payload.shift.InformationShift;
 import com.opmms.system.SmartOps.Maintenance.System.payload.shift.ShiftData;
 import com.opmms.system.SmartOps.Maintenance.System.repository.ShiftRepository;
 import lombok.RequiredArgsConstructor;
@@ -23,8 +24,9 @@ public class ShiftServiceImpl implements ShiftService {
     @Override
     public ApiResponseShift getAllShift()
     {
-        List<Shift> shifts = shiftRepository.findAll();
-        return buildResponse(200,shifts,"shift data fetched successfully");
+        List<InformationShift> informationShifts = shiftRepository.findAll()
+                .stream().map(this::mapToInfo).toList();
+        return buildResponse(200,informationShifts,"shift data fetched successfully");
     }
 
     @Override
@@ -32,14 +34,14 @@ public class ShiftServiceImpl implements ShiftService {
 
         Shift shift = modelMapper.map(apiRequestShift, Shift.class);
         Shift savedShift = shiftRepository.save(shift);
-        return buildResponse(201,Collections.singletonList(savedShift),"shift created successfully");
+        return buildResponse(201,Collections.singletonList(mapToInfo(savedShift)),"shift created successfully");
     }
 
     @Override
     public ApiResponseShift getShiftById(Long shiftId) {
 
         Shift shift=findByIdOrThrow(shiftId);
-        return buildResponse(200,Collections.singletonList(shift),"shift data fetched successfully");
+        return buildResponse(200,Collections.singletonList(mapToInfo(shift)),"shift data fetched successfully");
     }
 
     @Override
@@ -50,7 +52,7 @@ public class ShiftServiceImpl implements ShiftService {
         shift.setStartTime(apiRequestShift.getStartTime());
         shift.setEndTime(apiRequestShift.getEndTime());
         Shift updateShift = shiftRepository.save(shift);
-        return buildResponse(200,Collections.singletonList(updateShift),"shift updated successfully");
+        return buildResponse(200,Collections.singletonList(mapToInfo(updateShift)),"shift updated successfully");
     }
 
     @Override
@@ -58,7 +60,7 @@ public class ShiftServiceImpl implements ShiftService {
 
         Shift shift = findByIdOrThrow(shiftId);
         shiftRepository.delete(shift);
-        return buildResponse(200,Collections.singletonList(shift),"shift deleted successfully");
+        return buildResponse(200,Collections.singletonList(mapToInfo(shift)),"shift deleted successfully");
     }
 
     private Shift findByIdOrThrow(Long shiftId) {
@@ -66,7 +68,12 @@ public class ShiftServiceImpl implements ShiftService {
                 .orElseThrow(()->new ResourceNotFoundException(404, ResourceType.SHIFT,"shift not found"));
     }
 
-    private  ApiResponseShift buildResponse(int status, List<Shift> data,String message)
+    private InformationShift mapToInfo(Shift shift)
+    {
+        return modelMapper.map(shift, InformationShift.class);
+    }
+
+    private  ApiResponseShift buildResponse(int status, List<InformationShift> data,String message)
     {
         return new ApiResponseShift(status,new ShiftData(data==null? Collections.emptyList():data),message);
     }

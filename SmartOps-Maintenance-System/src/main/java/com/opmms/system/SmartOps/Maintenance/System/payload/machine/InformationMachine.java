@@ -4,15 +4,14 @@ import com.opmms.system.SmartOps.Maintenance.System.model.Status;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
 import java.time.LocalDate;
-import java.util.Date;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ApiRequestMachine {
+public class InformationMachine {
 
+    private Long machineId;
     private String machineName;
     private String location;
     private String model;
@@ -23,5 +22,6 @@ public class ApiRequestMachine {
     private String remarks;
     private String machineCode;
     private String manufacturerName;
-
+    private LocalDate createdAt;
+    private LocalDate updatedAt;
 }

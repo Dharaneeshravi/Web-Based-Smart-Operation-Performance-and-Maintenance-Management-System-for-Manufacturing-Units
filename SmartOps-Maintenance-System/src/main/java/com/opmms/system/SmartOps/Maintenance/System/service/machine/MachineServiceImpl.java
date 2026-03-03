@@ -5,6 +5,7 @@ import com.opmms.system.SmartOps.Maintenance.System.model.Machine;
 import com.opmms.system.SmartOps.Maintenance.System.model.ResourceType;
 import com.opmms.system.SmartOps.Maintenance.System.payload.machine.ApiRequestMachine;
 import com.opmms.system.SmartOps.Maintenance.System.payload.machine.ApiResponseMachine;
+import com.opmms.system.SmartOps.Maintenance.System.payload.machine.InformationMachine;
 import com.opmms.system.SmartOps.Maintenance.System.payload.machine.MachineData;
 import com.opmms.system.SmartOps.Maintenance.System.repository.MachineRepository;
 import lombok.RequiredArgsConstructor;
@@ -23,22 +24,23 @@ public class MachineServiceImpl implements MachineService {
     @Override
     public ApiResponseMachine getAllMachine() {
 
-        List<Machine> machineList=machineRepository.findAll();
-        return buildResponse(200,machineList,"machine fetched successfully");
+        List<InformationMachine> informationMachines=machineRepository.findAll()
+                .stream().map(this::mapToInfo).toList();
+        return buildResponse(200,informationMachines,"machine fetched successfully");
     }
 
     @Override
     public ApiResponseMachine createMachine(ApiRequestMachine apiRequestMachine) {
 
         Machine machine=machineRepository.save(mapToMachine(apiRequestMachine));
-        return buildResponse(201,Collections.singletonList(machine),"machine created successfully");
+        return buildResponse(201,Collections.singletonList(mapToInfo(machine)),"machine created successfully");
     }
 
     @Override
     public ApiResponseMachine getMachineById(Long machineId) {
 
         Machine machine=findByIdOrThrow(machineId);
-        return buildResponse(200,Collections.singletonList(machine),"machine fetched successfully");
+        return buildResponse(200,Collections.singletonList(mapToInfo(machine)),"machine fetched successfully");
     }
 
     @Override
@@ -56,7 +58,7 @@ public class MachineServiceImpl implements MachineService {
         machine.setManufacturerName(apiRequestMachine.getManufacturerName());
         machine.setMachineCode(apiRequestMachine.getMachineCode());
         Machine updatedMachine=machineRepository.save(machine);
-        return buildResponse(200,Collections.singletonList(updatedMachine),"machine updated successfully");
+        return buildResponse(200,Collections.singletonList(mapToInfo(updatedMachine)),"machine updated successfully");
     }
 
     @Override
@@ -64,17 +66,22 @@ public class MachineServiceImpl implements MachineService {
 
         Machine machine=findByIdOrThrow(machineId);
         machineRepository.delete(machine);
-        return buildResponse(200,Collections.singletonList(machine),"machine deleted successfully");
+        return buildResponse(200,Collections.singletonList(mapToInfo(machine)),"machine deleted successfully");
     }
 
-    private ApiResponseMachine buildResponse(int status, List<Machine> machineList, String message)
+    private ApiResponseMachine buildResponse(int status, List<InformationMachine> data, String message)
     {
-        return new ApiResponseMachine(status,new MachineData(machineList==null? Collections.emptyList():machineList),message);
+        return new ApiResponseMachine(status,new MachineData(data==null? Collections.emptyList():data),message);
     }
 
     private Machine mapToMachine(ApiRequestMachine apiRequestMachine)
     {
         return mapper.map(apiRequestMachine, Machine.class);
+    }
+
+    private InformationMachine mapToInfo(Machine machine)
+    {
+        return mapper.map(machine, InformationMachine.class);
     }
 
     private Machine findByIdOrThrow(Long machineId)

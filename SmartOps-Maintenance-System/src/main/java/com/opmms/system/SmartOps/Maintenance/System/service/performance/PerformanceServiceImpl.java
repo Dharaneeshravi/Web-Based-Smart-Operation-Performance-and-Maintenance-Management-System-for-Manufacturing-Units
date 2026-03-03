@@ -5,6 +5,7 @@ import com.opmms.system.SmartOps.Maintenance.System.model.Performance;
 import com.opmms.system.SmartOps.Maintenance.System.model.ResourceType;
 import com.opmms.system.SmartOps.Maintenance.System.payload.performance.ApiRequestPerformance;
 import com.opmms.system.SmartOps.Maintenance.System.payload.performance.ApiResponsePerformance;
+import com.opmms.system.SmartOps.Maintenance.System.payload.performance.InformationPerformance;
 import com.opmms.system.SmartOps.Maintenance.System.payload.performance.PerformanceData;
 import com.opmms.system.SmartOps.Maintenance.System.repository.PerformanceRepository;
 import lombok.RequiredArgsConstructor;
@@ -24,8 +25,9 @@ public class PerformanceServiceImpl implements PerformanceService {
     @Override
     public ApiResponsePerformance getAllPerformance() {
 
-        List<Performance> performances = performanceRepository.findAll();
-        return buildResponse(200,performances,"performance data fetched successfully");
+        List<InformationPerformance> informationPerformances = performanceRepository.findAll()
+                .stream().map(this::mapToInfo).toList();
+        return buildResponse(200,informationPerformances,"performance data fetched successfully");
     }
 
     @Override
@@ -33,14 +35,14 @@ public class PerformanceServiceImpl implements PerformanceService {
 
         Performance performance = mapper.map(apiRequestPerformance, Performance.class);
         Performance savedPerformance = performanceRepository.save(performance);
-        return buildResponse(201,Collections.singletonList(savedPerformance),"performance created successfully");
+        return buildResponse(201,Collections.singletonList(mapToInfo(savedPerformance)),"performance created successfully");
     }
 
     @Override
     public ApiResponsePerformance getPerformanceById(Long performanceId) {
 
         Performance performance=findByIdOrThrow(performanceId);
-        return buildResponse(200,Collections.singletonList(performance),"performance data fetched successfully");
+        return buildResponse(200,Collections.singletonList(mapToInfo(performance)),"performance data fetched successfully");
 
     }
 
@@ -57,7 +59,7 @@ public class PerformanceServiceImpl implements PerformanceService {
         performance.setQuality(apiRequestPerformance.getQuality());
         performance.setOee(apiRequestPerformance.getOee());
         Performance updatedPerformance=performanceRepository.save(performance);
-        return buildResponse(200,Collections.singletonList(updatedPerformance),"performance updated successfully");
+        return buildResponse(200,Collections.singletonList(mapToInfo(updatedPerformance)),"performance updated successfully");
     }
 
     @Override
@@ -65,7 +67,7 @@ public class PerformanceServiceImpl implements PerformanceService {
 
         Performance performance=findByIdOrThrow(performanceId);
         performanceRepository.delete(performance);
-        return buildResponse(200,Collections.singletonList(performance),"performance deleted successfully");
+        return buildResponse(200,Collections.singletonList(mapToInfo(performance)),"performance deleted successfully");
     }
 
 
@@ -75,8 +77,13 @@ public class PerformanceServiceImpl implements PerformanceService {
                .orElseThrow(()->new ResourceNotFoundException(404, ResourceType.PRODUCTION,"performance data fetched successfully"));
     }
 
+    private InformationPerformance mapToInfo(Performance performance)
+    {
+        return mapper.map(performance,InformationPerformance.class);
+    }
 
-    private ApiResponsePerformance buildResponse(int status, List<Performance> data,String message)
+
+    private ApiResponsePerformance buildResponse(int status, List<InformationPerformance> data, String message)
     {
         return new ApiResponsePerformance(status,new PerformanceData(data==null? Collections.emptyList():data),message);
     }

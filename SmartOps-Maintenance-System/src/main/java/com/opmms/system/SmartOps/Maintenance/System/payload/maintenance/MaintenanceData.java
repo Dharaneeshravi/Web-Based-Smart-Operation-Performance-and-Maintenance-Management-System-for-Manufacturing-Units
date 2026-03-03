@@ -12,5 +12,5 @@ import java.util.List;
 @NoArgsConstructor
 public class MaintenanceData {
 
-    private List<Maintenance> maintenances;
+    private List<InformationMaintenance> informationMaintenances;
 }

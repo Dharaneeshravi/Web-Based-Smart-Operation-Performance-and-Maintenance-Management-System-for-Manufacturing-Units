@@ -6,6 +6,7 @@ import com.opmms.system.SmartOps.Maintenance.System.model.ResourceType;
 import com.opmms.system.SmartOps.Maintenance.System.payload.downtime.ApiRequestDowntime;
 import com.opmms.system.SmartOps.Maintenance.System.payload.downtime.ApiResponseDowntime;
 import com.opmms.system.SmartOps.Maintenance.System.payload.downtime.DowntimeData;
+import com.opmms.system.SmartOps.Maintenance.System.payload.downtime.InformationDowntime;
 import com.opmms.system.SmartOps.Maintenance.System.repository.DowntimeRepository;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -24,8 +25,9 @@ public class DowntimeServiceImpl implements DowntimeService {
     @Override
     public ApiResponseDowntime getAllDowntime() {
 
-        List<Downtime> downtimeList = downtimeRepository.findAll();
-        return  buildResponse(200,downtimeList,"downtime fetched successfully");
+        List<InformationDowntime> informationDowntimes = downtimeRepository.findAll()
+                .stream().map(this::mapToInfo).toList();
+        return  buildResponse(200,informationDowntimes,"downtime fetched successfully");
     }
 
     @Override
@@ -33,14 +35,14 @@ public class DowntimeServiceImpl implements DowntimeService {
 
         Downtime downtime = mapper.map(apiRequestDowntime, Downtime.class);
         Downtime savedDowntime = downtimeRepository.save(downtime);
-        return buildResponse(201,Collections.singletonList(savedDowntime),"downtime created successfully");
+        return buildResponse(201,Collections.singletonList(mapToInfo(savedDowntime)),"downtime created successfully");
     }
 
     @Override
     public ApiResponseDowntime getDowntimeById(Long downtimeId) {
 
       Downtime downtime=findByIdOrThrow(downtimeId);
-      return buildResponse(200,Collections.singletonList(downtime),"downtime found successfully");
+      return buildResponse(200,Collections.singletonList(mapToInfo(downtime)),"downtime found successfully");
 
     }
 
@@ -56,7 +58,7 @@ public class DowntimeServiceImpl implements DowntimeService {
         downtime.setStatus(apiRequestDowntime.getStatus());
         downtime.setDuration(apiRequestDowntime.getDuration());
         Downtime updatedDowntime = downtimeRepository.save(downtime);
-        return buildResponse(200,Collections.singletonList(updatedDowntime),"downtime updated successfully");
+        return buildResponse(200,Collections.singletonList(mapToInfo(updatedDowntime)),"downtime updated successfully");
     }
 
     @Override
@@ -64,7 +66,7 @@ public class DowntimeServiceImpl implements DowntimeService {
 
         Downtime downtime=findByIdOrThrow(downtimeId);
         downtimeRepository.delete(downtime);
-        return buildResponse(200,Collections.singletonList(downtime),"downtime deleted successfully");
+        return buildResponse(200,Collections.singletonList(mapToInfo(downtime)),"downtime deleted successfully");
     }
 
     private Downtime findByIdOrThrow(Long downtimeId)
@@ -73,7 +75,12 @@ public class DowntimeServiceImpl implements DowntimeService {
                 .orElseThrow(()->new ResourceNotFoundException(404, ResourceType.DOWNTIME,"downtime not found"));
     }
 
-    private ApiResponseDowntime buildResponse(int status, List<Downtime> data,String message)
+    private InformationDowntime mapToInfo(Downtime downtime)
+    {
+        return mapper.map(downtime, InformationDowntime.class);
+    }
+
+    private ApiResponseDowntime buildResponse(int status, List<InformationDowntime> data,String message)
     {
         return new ApiResponseDowntime(status,new DowntimeData(data==null? Collections.emptyList():data),message);
     }

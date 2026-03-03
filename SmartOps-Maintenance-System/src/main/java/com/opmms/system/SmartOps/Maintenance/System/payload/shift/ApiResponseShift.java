@@ -1,7 +1,6 @@
 package com.opmms.system.SmartOps.Maintenance.System.payload.shift;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.opmms.system.SmartOps.Maintenance.System.payload.production.ProductionData;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

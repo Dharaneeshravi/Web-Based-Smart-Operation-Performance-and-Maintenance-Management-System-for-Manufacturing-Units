@@ -3,15 +3,14 @@ package com.opmms.system.SmartOps.Maintenance.System.payload.performance;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
 import java.time.LocalDate;
-import java.util.Date;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ApiRequestPerformance {
+public class InformationPerformance {
 
+    private Long performanceId;
     private LocalDate date;
     private Double workingHours;
     private Double downtimeHours;
@@ -20,4 +19,6 @@ public class ApiRequestPerformance {
     private Double performance;
     private Double quality;
     private Double oee;
+    private LocalDate createdAt;
+    private LocalDate updatedAt;
 }

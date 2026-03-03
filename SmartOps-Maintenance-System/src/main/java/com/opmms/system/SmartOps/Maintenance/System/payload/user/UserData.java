@@ -1,6 +1,5 @@
 package com.opmms.system.SmartOps.Maintenance.System.payload.user;
 
-import com.opmms.system.SmartOps.Maintenance.System.model.User;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -11,5 +10,5 @@ import java.util.List;
 @NoArgsConstructor
 public class UserData {
 
-    private List<User> users;
+    private List<InformationUser> informationUsers;
 }

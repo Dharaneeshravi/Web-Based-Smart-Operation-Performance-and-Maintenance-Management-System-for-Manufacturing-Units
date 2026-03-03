@@ -11,5 +11,5 @@ import java.util.List;
 @NoArgsConstructor
 public class MachineData {
 
-    private List<Machine>  machines;
+    private List<InformationMachine>  machineList;
 }

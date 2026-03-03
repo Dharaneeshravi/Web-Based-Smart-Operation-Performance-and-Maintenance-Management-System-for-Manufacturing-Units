@@ -5,19 +5,20 @@ import com.opmms.system.SmartOps.Maintenance.System.model.Status;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
 import java.time.LocalDate;
-import java.util.Date;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ApiRequestMaintenance {
+public class InformationMaintenance {
 
+    private Long maintenanceId;
     private MaintenanceType maintenanceType;
     private LocalDate scheduledDate;
     private LocalDate performedDate;
     private String description;
     private Status status;
     private Double cost;
+    private LocalDate createdAt;
+    private LocalDate updatedAt;
 }

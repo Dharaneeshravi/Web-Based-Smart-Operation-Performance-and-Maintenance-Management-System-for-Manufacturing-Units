@@ -3,16 +3,15 @@ package com.opmms.system.SmartOps.Maintenance.System.payload.production;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.Date;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ApiRequestProduction {
+public class InformationProduction {
 
+    private Long productionId;
     private LocalDate productionDate;
     private LocalTime startTime;
     private LocalTime endTime;
@@ -20,4 +19,7 @@ public class ApiRequestProduction {
     private Integer outputQty;
     private Integer defectiveQty;
     private String remarks;
+    private LocalDate createdAt;
+    private LocalDate updatedAt;
+    private Long machineId;
 }
