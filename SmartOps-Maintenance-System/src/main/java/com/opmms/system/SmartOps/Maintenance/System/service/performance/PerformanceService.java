@@ -6,7 +6,7 @@ import com.opmms.system.SmartOps.Maintenance.System.payload.performance.ApiRespo
 public interface PerformanceService {
     ApiResponsePerformance getAllPerformance();
 
-    ApiResponsePerformance createPerformance(ApiRequestPerformance apiRequestPerformance);
+    ApiResponsePerformance createPerformance(Long machineId,ApiRequestPerformance apiRequestPerformance);
 
     ApiResponsePerformance getPerformanceById(Long performanceId);
 

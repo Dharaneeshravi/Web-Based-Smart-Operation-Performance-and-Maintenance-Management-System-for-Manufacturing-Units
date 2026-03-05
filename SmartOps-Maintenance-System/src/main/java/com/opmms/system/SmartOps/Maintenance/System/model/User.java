@@ -43,4 +43,8 @@ public class User {
     @JsonManagedReference
     private Set<Downtime> downtime;
 
+    @OneToMany(mappedBy = "user")
+    @JsonManagedReference
+    private Set<Maintenance> maintenance;
+
 }

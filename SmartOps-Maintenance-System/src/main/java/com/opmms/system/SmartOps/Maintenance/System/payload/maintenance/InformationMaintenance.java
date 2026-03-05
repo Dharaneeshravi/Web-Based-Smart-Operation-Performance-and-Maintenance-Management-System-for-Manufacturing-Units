@@ -21,4 +21,6 @@ public class InformationMaintenance {
     private Double cost;
     private LocalDate createdAt;
     private LocalDate updatedAt;
+    private Long machineId;
+    private Long userId;
 }

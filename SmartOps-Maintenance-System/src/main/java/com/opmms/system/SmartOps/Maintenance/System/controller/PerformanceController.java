@@ -24,9 +24,9 @@ public class PerformanceController {
     }
 
     @PostMapping("/createPerformance")
-    public ResponseEntity<ApiResponsePerformance> createPerformance(@RequestBody ApiRequestPerformance apiRequestPerformance)
+    public ResponseEntity<ApiResponsePerformance> createPerformance(@RequestParam Long machineId,@RequestBody ApiRequestPerformance apiRequestPerformance)
     {
-        return ResponseEntity.status(HttpStatus.CREATED).body(performanceService.createPerformance(apiRequestPerformance));
+        return ResponseEntity.status(HttpStatus.CREATED).body(performanceService.createPerformance(machineId,apiRequestPerformance));
     }
 
     @GetMapping("/getPerformanceById/{performanceId}")

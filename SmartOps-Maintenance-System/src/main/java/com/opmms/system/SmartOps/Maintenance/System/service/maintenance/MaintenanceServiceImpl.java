@@ -1,13 +1,17 @@
 package com.opmms.system.SmartOps.Maintenance.System.service.maintenance;
 
 import com.opmms.system.SmartOps.Maintenance.System.exception.ResourceNotFoundException;
+import com.opmms.system.SmartOps.Maintenance.System.model.Machine;
 import com.opmms.system.SmartOps.Maintenance.System.model.Maintenance;
 import com.opmms.system.SmartOps.Maintenance.System.model.ResourceType;
+import com.opmms.system.SmartOps.Maintenance.System.model.User;
 import com.opmms.system.SmartOps.Maintenance.System.payload.maintenance.ApiRequestMaintenance;
 import com.opmms.system.SmartOps.Maintenance.System.payload.maintenance.ApiResponseMaintenance;
 import com.opmms.system.SmartOps.Maintenance.System.payload.maintenance.InformationMaintenance;
 import com.opmms.system.SmartOps.Maintenance.System.payload.maintenance.MaintenanceData;
+import com.opmms.system.SmartOps.Maintenance.System.repository.MachineRepository;
 import com.opmms.system.SmartOps.Maintenance.System.repository.MaintenanceRepository;
+import com.opmms.system.SmartOps.Maintenance.System.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
@@ -19,6 +23,8 @@ import java.util.List;
 public class MaintenanceServiceImpl implements MaintenanceService {
 
     private final MaintenanceRepository maintenanceRepository;
+    private final UserRepository userRepository;
+    private final MachineRepository machineRepository;
     private final ModelMapper modelMapper;
 
     @Override
@@ -30,9 +36,19 @@ public class MaintenanceServiceImpl implements MaintenanceService {
     }
 
     @Override
-    public ApiResponseMaintenance createMaintenance(ApiRequestMaintenance apiRequestMaintenance) {
+    public ApiResponseMaintenance createMaintenance(Long machineId,Long userId,ApiRequestMaintenance apiRequestMaintenance) {
+
+        Machine machine=machineRepository.findById(machineId)
+                              .orElseThrow(()->new ResourceNotFoundException(404, ResourceType.MACHINE,"machine not found"));
+
+        User user=userRepository.findById(userId)
+                .orElseThrow(()->new ResourceNotFoundException(404, ResourceType.USER,"User not found "));
 
         Maintenance maintenance = modelMapper.map(apiRequestMaintenance,Maintenance.class);
+        maintenance.setMachine(machine);
+        maintenance.setUser(user);
+        maintenance.setUserId(userId);
+        maintenance.setMachineId(machineId);
         Maintenance savedMaintenance = maintenanceRepository.save(maintenance);
         return buildResponse(201,Collections.singletonList(mapToInfo(savedMaintenance)),"maintenance data created successfully");
     }

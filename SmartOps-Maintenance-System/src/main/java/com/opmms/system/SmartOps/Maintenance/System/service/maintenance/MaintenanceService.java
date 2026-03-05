@@ -6,7 +6,7 @@ import com.opmms.system.SmartOps.Maintenance.System.payload.maintenance.ApiRespo
 public interface MaintenanceService {
     ApiResponseMaintenance getAllMaintenance();
 
-    ApiResponseMaintenance createMaintenance(ApiRequestMaintenance apiRequestMaintenance);
+    ApiResponseMaintenance createMaintenance(Long machineId,Long userId,ApiRequestMaintenance apiRequestMaintenance);
 
     ApiResponseMaintenance getMaintenanceById(Long maintenanceId);
 

@@ -47,4 +47,12 @@ public class Machine {
     @OneToMany(mappedBy = "machine",cascade = CascadeType.ALL,orphanRemoval = true)
     @JsonManagedReference
     private Set<Downtime> downtimes;
+
+    @OneToMany(mappedBy = "machine",cascade = CascadeType.ALL,orphanRemoval = true)
+    @JsonManagedReference
+    private Set<Maintenance> maintenances;
+
+    @OneToMany(mappedBy = "machine",cascade = CascadeType.ALL,orphanRemoval = true)
+    @JsonManagedReference
+    private Set<Performance> performances;
 }

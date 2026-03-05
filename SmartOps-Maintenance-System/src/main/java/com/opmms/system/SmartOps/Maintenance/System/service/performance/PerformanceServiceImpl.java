@@ -1,12 +1,14 @@
 package com.opmms.system.SmartOps.Maintenance.System.service.performance;
 
 import com.opmms.system.SmartOps.Maintenance.System.exception.ResourceNotFoundException;
+import com.opmms.system.SmartOps.Maintenance.System.model.Machine;
 import com.opmms.system.SmartOps.Maintenance.System.model.Performance;
 import com.opmms.system.SmartOps.Maintenance.System.model.ResourceType;
 import com.opmms.system.SmartOps.Maintenance.System.payload.performance.ApiRequestPerformance;
 import com.opmms.system.SmartOps.Maintenance.System.payload.performance.ApiResponsePerformance;
 import com.opmms.system.SmartOps.Maintenance.System.payload.performance.InformationPerformance;
 import com.opmms.system.SmartOps.Maintenance.System.payload.performance.PerformanceData;
+import com.opmms.system.SmartOps.Maintenance.System.repository.MachineRepository;
 import com.opmms.system.SmartOps.Maintenance.System.repository.PerformanceRepository;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -19,6 +21,7 @@ import java.util.List;
 public class PerformanceServiceImpl implements PerformanceService {
 
     private final PerformanceRepository performanceRepository;
+    private final MachineRepository machineRepository;
     private final ModelMapper mapper;
 
 
@@ -31,9 +34,14 @@ public class PerformanceServiceImpl implements PerformanceService {
     }
 
     @Override
-    public ApiResponsePerformance createPerformance(ApiRequestPerformance apiRequestPerformance) {
+    public ApiResponsePerformance createPerformance(Long machineId,ApiRequestPerformance apiRequestPerformance) {
+
+        Machine machine=machineRepository.findById(machineId)
+                .orElseThrow(()->new ResourceNotFoundException(404, ResourceType.MACHINE,"machine not found"));
 
         Performance performance = mapper.map(apiRequestPerformance, Performance.class);
+        performance.setMachineId(machineId);
+        performance.setMachine(machine);
         Performance savedPerformance = performanceRepository.save(performance);
         return buildResponse(201,Collections.singletonList(mapToInfo(savedPerformance)),"performance created successfully");
     }

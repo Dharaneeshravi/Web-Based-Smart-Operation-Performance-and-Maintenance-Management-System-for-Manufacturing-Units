@@ -22,9 +22,9 @@ public class MaintenanceController {
     }
 
     @PostMapping("/createMaintenance")
-    public ResponseEntity<ApiResponseMaintenance> createMaintenance(@RequestBody ApiRequestMaintenance apiRequestMaintenance)
+    public ResponseEntity<ApiResponseMaintenance> createMaintenance(@RequestParam Long machineId,@RequestParam Long userId,@RequestBody ApiRequestMaintenance apiRequestMaintenance)
     {
-        return ResponseEntity.status(HttpStatus.CREATED).body(maintenanceService.createMaintenance(apiRequestMaintenance));
+        return ResponseEntity.status(HttpStatus.CREATED).body(maintenanceService.createMaintenance(machineId,userId,apiRequestMaintenance));
     }
 
     @GetMapping("/getMaintenanceById/{maintenanceId}")

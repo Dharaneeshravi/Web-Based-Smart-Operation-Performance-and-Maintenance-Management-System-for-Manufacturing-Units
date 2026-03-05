@@ -19,6 +19,7 @@ public class InformationPerformance {
     private Double performance;
     private Double quality;
     private Double oee;
+    private Long machineId;
     private LocalDate createdAt;
     private LocalDate updatedAt;
 }

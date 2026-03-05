@@ -1,5 +1,6 @@
 package com.opmms.system.SmartOps.Maintenance.System.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -32,4 +33,19 @@ public class Maintenance {
     private LocalDate createdAt;
     @UpdateTimestamp
     private LocalDate updatedAt;
+    @Column(name = "machine_number")
+    private Long machineId;
+    @Column(name = "user_number")
+    private Long userId;
+
+    @ManyToOne
+    @JsonBackReference
+    @JoinColumn(name = "machine_id")
+    private Machine machine;
+
+    @ManyToOne
+    @JsonBackReference
+    @JoinColumn(name = "user_id")
+    private User user;
+
 }
