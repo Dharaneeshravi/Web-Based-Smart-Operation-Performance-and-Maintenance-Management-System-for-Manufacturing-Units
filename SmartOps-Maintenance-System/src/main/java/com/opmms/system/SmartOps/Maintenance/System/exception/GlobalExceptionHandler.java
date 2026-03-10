@@ -4,6 +4,8 @@ import com.opmms.system.SmartOps.Maintenance.System.payload.downtime.ApiResponse
 import com.opmms.system.SmartOps.Maintenance.System.payload.downtime.DowntimeData;
 import com.opmms.system.SmartOps.Maintenance.System.payload.machine.ApiResponseMachine;
 import com.opmms.system.SmartOps.Maintenance.System.payload.machine.MachineData;
+import com.opmms.system.SmartOps.Maintenance.System.payload.machineassignment.ApiResponseMachineAssignment;
+import com.opmms.system.SmartOps.Maintenance.System.payload.machineassignment.MachineAssignmentData;
 import com.opmms.system.SmartOps.Maintenance.System.payload.maintenance.ApiResponseMaintenance;
 import com.opmms.system.SmartOps.Maintenance.System.payload.maintenance.MaintenanceData;
 import com.opmms.system.SmartOps.Maintenance.System.payload.performance.ApiResponsePerformance;
@@ -49,6 +51,9 @@ public class GlobalExceptionHandler {
 
            case SHIFT ->
                buildResponse(new ApiResponseShift(exception.getStatus(),new ShiftData(Collections.emptyList()), exception.getMessage()));
+
+           case MACHINE_ASSIGNMENT ->
+               buildResponse(new ApiResponseMachineAssignment(exception.getStatus(),new MachineAssignmentData(Collections.emptyList()), exception.getMessage()));
        };
     }
 

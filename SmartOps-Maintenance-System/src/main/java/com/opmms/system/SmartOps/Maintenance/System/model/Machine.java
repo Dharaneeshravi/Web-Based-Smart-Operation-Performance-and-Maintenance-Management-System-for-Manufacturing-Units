@@ -55,4 +55,8 @@ public class Machine {
     @OneToMany(mappedBy = "machine",cascade = CascadeType.ALL,orphanRemoval = true)
     @JsonManagedReference
     private Set<Performance> performances;
+
+    @OneToMany(mappedBy = "machine",cascade = CascadeType.ALL,orphanRemoval = true)
+    @JsonManagedReference
+    private Set<MachineAssignment> machineAssignments;
 }

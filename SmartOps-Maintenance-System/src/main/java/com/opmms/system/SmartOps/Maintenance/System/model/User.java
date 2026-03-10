@@ -47,4 +47,8 @@ public class User {
     @JsonManagedReference
     private Set<Maintenance> maintenance;
 
+    @OneToMany(mappedBy = "user")
+    @JsonManagedReference
+    private Set<MachineAssignment> machineAssignments;
+
 }

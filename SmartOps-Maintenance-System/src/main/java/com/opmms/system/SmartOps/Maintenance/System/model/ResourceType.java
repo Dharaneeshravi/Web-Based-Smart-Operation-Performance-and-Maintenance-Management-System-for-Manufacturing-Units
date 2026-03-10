@@ -8,5 +8,6 @@ public enum ResourceType {
     DOWNTIME,
     MAINTENANCE,
     PERFORMANCE,
-    SHIFT
+    SHIFT,
+    MACHINE_ASSIGNMENT,
 }
