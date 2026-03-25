@@ -4,5 +4,10 @@ public enum Status {
 
     ACTIVE,
     INACTIVE,
-    UNDER_MAINTENANCE
+    PENDING,
+    RESOLVED,
+    UNDER_MAINTENANCE,
+    SCHEDULED,
+    COMPLETED,
+    DELAYED
 }

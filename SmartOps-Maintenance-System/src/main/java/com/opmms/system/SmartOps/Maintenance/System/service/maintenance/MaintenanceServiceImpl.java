@@ -41,7 +41,7 @@ public class MaintenanceServiceImpl implements MaintenanceService {
         Machine machine=machineRepository.findById(machineId)
                               .orElseThrow(()->new ResourceNotFoundException(404, ResourceType.MACHINE,"machine not found"));
 
-        User user=userRepository.findById(userId)
+        User user=userRepository.findById(1l)
                 .orElseThrow(()->new ResourceNotFoundException(404, ResourceType.USER,"User not found "));
 
         Maintenance maintenance = modelMapper.map(apiRequestMaintenance,Maintenance.class);
